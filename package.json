@@ -1,0 +1,10 @@
+{
+  "name": "trabalho-pratico",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@chilkat/ck-node12-linux64": "^9.50.83",
+    "crypto-js": "^4.0.0"
+  }
+}
