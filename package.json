@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@chilkat/ck-node12-linux64": "^9.50.83",
     "crypto-js": "^4.0.0"
   }
 }

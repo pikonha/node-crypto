@@ -5,8 +5,15 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-export const readLinePromise = (question) => {
+const readLinePromise = (question) => {
   return new Promise((resolve) => {
     rl.question(question, (answer) => resolve(answer));
   });
+};
+
+const closeInputReader = () => rl.close();
+
+module.exports = {
+  readLinePromise,
+  closeInputReader,
 };
