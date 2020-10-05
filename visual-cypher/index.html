@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        max-width: 1024px;
+        margin: 0 auto;
+      }
+
+      *,
+      button,
+      input {
+        font-family: "Roboto", sans-serif;
+      }
+
+      button {
+        cursor: pointer;
+        padding: 0.3rem 0;
+      }
+
+      form {
+        padding: 0 2rem;
+      }
+
+      #pwd-section {
+        margin: 0 auto 2rem;
+      }
+
+      #inputs-section {
+        display: flex;
+        justify-content: space-evenly;
+      }
+
+      #inputs-section > div,
+      #output-section {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #inputs-section > div > textarea {
+        width: 300px;
+        height: 200px;
+      }
+
+      #output-section {
+        margin-top: 2rem;
+      }
+
+      .error {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>AES-GCM + PBKDF2</h1>
+      <h3>Criptografia simples usando o algoritmo AES GCM 256bits.</h3>
+      <p>
+        A senha padrão para criptografia é "12345". O texto criptografia é
+        segura pra ser distribuída publicamente, contanto que a senha esteja
+        protegida.
+      </p>
+    </div>
+
+    <form>
+      <section id="pwd-section">
+        <label>Senha</label>
+        <input id="pwd-input" type="password" value="12345" required />
+      </section>
+
+      <div id="inputs-section">
+        <div>
+          <label>Criptografar</label>
+          <textarea rows="5" id="cypher-input"></textarea>
+          <button id="cypher-button" type="submit">Enviar</button>
+        </div>
+
+        <div>
+          <label>Descriptografar</label>
+          <textarea rows="5" id="decypher-input"></textarea>
+          <button id="decypher-button" type="submit">Enviar</button>
+        </div>
+      </div>
+
+      <div id="output-section">
+        <label>Output</label>
+        <textarea readonly rows="7" id="content-output"></textarea>
+      </div>
+    </form>
+
+    <script src="https://pagedemos.com/resource/?qskd4gcdndtg/aes4js.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script src="index.js" type="module"></script>
+  </body>
+</html>

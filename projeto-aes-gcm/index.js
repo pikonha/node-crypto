@@ -12,7 +12,7 @@ function encrypt(str) {
     keySize: 128 / 32,
   });
 
-  const cipher = crypto.createCipheriv("aes-256-cbc", key.toString(), iv);
+  const cipher = crypto.createCipheriv("aes-256-gcm", key.toString(), iv);
   let crypt = cipher.update(str, "utf8", "base64");
   crypt += cipher.final("base64");
   return crypt;
