@@ -1,10 +1,11 @@
-const { readLinePromise } = require("../globals");
+const { readLinePromise, closeInputReader } = require("../globals");
 const crypto = require("crypto");
 
 (async () => {
   const answer = await readLinePromise(
     "Insira uma mensagem para ser criptografada?"
   );
+
   // generates random iv
   const iv = crypto.randomBytes(16);
 
@@ -22,5 +23,5 @@ const crypto = require("crypto");
 
   console.log(`A mensagem encriptada: ${encryptedAnswer}`);
 
-  rl.close();
+  closeInputReader();
 })();

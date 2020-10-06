@@ -1,6 +1,12 @@
-const salt = CryptoJS.lib.WordArray.random(16);
+function getSalt() {
+  const salt = localStorage.getItem("salt");
 
-function generateKey(password) {
+  if (!salt) return CryptoJS.lib.WordArray.random(16);
+
+  return salt;
+}
+
+function generateKey(password, salt) {
   const key = CryptoJS.PBKDF2(password, salt, {
     keySize: 4,
   }).toString();
@@ -14,6 +20,16 @@ async function encode(value, key) {
 
 async function decode(value, key) {
   return await aes4js.decrypt(key, value);
+}
+
+async function sha256(str) {
+  const hash = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder("utf-8").encode(str)
+  );
+  return Array.from(new Uint8Array(hash))
+    .map((bin) => ("00" + bin.toString(16)).slice(-2))
+    .join("");
 }
 
 function bindEvents() {
@@ -30,11 +46,16 @@ function bindEvents() {
 
     if (!inputValue || !pwdInput.value) return;
 
-    const key = generateKey(pwdInput.value);
+    const salt = await getSalt();
+    localStorage.setItem("salt", salt);
+
+    const key = generateKey(pwdInput.value, salt);
 
     const encrypted = await encode(inputValue, key);
 
     contentOutput.value = JSON.stringify(encrypted);
+
+    hideErrorWarning();
   });
 
   decypherButton.addEventListener("click", async (e) => {
@@ -43,19 +64,27 @@ function bindEvents() {
 
     if (!inputValue || !pwdInput.value) return;
 
-    const key = generateKey(pwdInput.value);
+    const salt = await getSalt();
+    const key = generateKey(pwdInput.value, salt);
 
     try {
       const decrypted = await decode(inputValue, key);
       contentOutput.value = decrypted;
     } catch (error) {
       pwdInput.focus();
-      const span = document.createElement("span");
-      span.className = "error";
-      span.appendChild(document.createTextNode("Senha incorreta"));
-      pwdInput.parentNode.appendChild(span);
+      showErrorWarning();
     }
   });
+}
+
+function showErrorWarning() {
+  const span = document.querySelector("span.error");
+  span.style.visibility = "visible";
+}
+
+function hideErrorWarning() {
+  const span = document.querySelector("span.error");
+  span.style.display = "none";
 }
 
 (() => {
